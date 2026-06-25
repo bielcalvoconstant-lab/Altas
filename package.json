@@ -1,0 +1,41 @@
+{
+  "name": "atlas-bot",
+  "version": "1.0.0",
+  "description": "Bot Atlas - Inteligência Artificial, Moderação e Painel Administrativo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discord.js",
+    "dashboard",
+    "mongodb",
+    "gemini",
+    "stripe"
+  ],
+  "author": "Atlas Developer",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@snazzah/davey": "^2.1.1",
+    "connect-mongo": "^5.1.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "ffmpeg-static": "^5.2.0",
+    "mongoose": "^8.2.1",
+    "opusscript": "^0.0.8",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
