@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas - Portal de Acesso</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 flex items-center justify-center min-h-screen font-sans">
+  <div class="bg-gray-900 border border-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md">
+    
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-extrabold text-blue-500">ATLAS</h1>
+      <p class="text-sm text-gray-400 mt-1">Gerencie suas configurações e desfrute de IA sem limites</p>
+    </div>
+
+    <% if (error) { %>
+      <div class="bg-red-500/20 border border-red-500 text-red-200 p-3 rounded mb-4 text-sm text-center">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <!-- SESSÃO DE LOGIN TRADICIONAL -->
+    <% if (step === 'login') { %>
+      <form action="/login" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1">E-mail</label>
+          <input type="email" name="email" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1">Senha</label>
+          <input type="password" name="password" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <button class="w-full bg-blue-600 hover:bg-blue-700 font-bold py-2.5 rounded transition">Entrar</button>
+      </form>
+
+      <div class="mt-6 flex items-center justify-between text-xs text-gray-400">
+        <a href="/auth/discord" class="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-2.5 rounded font-bold text-center flex items-center justify-center gap-2">
+          Entrar com Discord (1 clique)
+        </a>
+      </div>
+
+      <p class="text-xs text-center text-gray-500 mt-4">
+        Não tem conta? <a href="/?register=true" onclick="window.location.search = '?register=true'; return false;" class="text-blue-400 hover:underline">Cadastre-se</a>
+      </p>
+    <% } %>
+
+    <!-- SESSÃO DE CADASTRO -->
+    <% if (step === 'register') { %>
+      <form action="/register" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1">Discord ID</label>
+          <input type="text" name="discordId" placeholder="ex: 374983749283749" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1">Nome de Usuário</label>
+          <input type="text" name="username" placeholder="ex: jorge_atlas" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1">E-mail</label>
+          <input type="email" name="email" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1">Senha</label>
+          <input type="password" name="password" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <button class="w-full bg-blue-600 hover:bg-blue-700 font-bold py-2.5 rounded transition">Enviar Código de Confirmação</button>
+      </form>
+      <p class="text-xs text-center text-gray-500 mt-4">
+        Já possui conta? <a href="/" class="text-blue-400 hover:underline">Fazer login</a>
+      </p>
+    <% } %>
+
+    <!-- SESSÃO DE VERIFICAÇÃO OTP -->
+    <% if (step === 'verify-otp') { %>
+      <div class="text-center mb-4">
+        <p class="text-sm text-yellow-400">Verifique sua caixa de entrada!</p>
+        <p class="text-xs text-gray-400">Enviamos um código de 6 dígitos para o e-mail inserido.</p>
+      </div>
+      <form action="/verify-otp" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-xs uppercase font-semibold text-gray-400 mb-1 text-center">Código OTP</label>
+          <input type="text" name="otp" maxLength="6" required class="w-full bg-gray-800 border border-gray-700 rounded p-2.5 text-white text-center text-2xl font-bold tracking-widest focus:outline-none focus:border-blue-500">
+        </div>
+        <button class="w-full bg-green-600 hover:bg-green-700 font-bold py-2.5 rounded transition">Verificar e Concluir</button>
+      </form>
+    <% } %>
+
+  </div>
+
+  <script>
+    // Gerencia alternância rápida de telas se o link de cadastro for clicado
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('register') === 'true' && '<%= step %>' === 'login') {
+      window.location.href = '#';
+      document.body.innerHTML = document.body.innerHTML.replace('step = \'login\'', 'step = \'register\'');
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>
